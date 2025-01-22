@@ -1,0 +1,13 @@
+{
+    "criteria": {
+        "gen_loot_table": {
+            "trigger": "minecraft:player_generates_container_loot",
+            "conditions": {
+                "loot_table": "minecraft:chests/bastion_treasure"
+            }
+        }
+    },
+    "rewards": {
+        "function": "pln:util/on_loot/mark_plunder/bastion_treasure"
+    }
+}
