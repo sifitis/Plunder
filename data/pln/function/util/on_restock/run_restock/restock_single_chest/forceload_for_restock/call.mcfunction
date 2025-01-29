@@ -1,0 +1,1 @@
+function pln:util/on_restock/run_restock/restock_single_chest/forceload_for_restock with storage pln:data root.manifest.matured.entries[0]

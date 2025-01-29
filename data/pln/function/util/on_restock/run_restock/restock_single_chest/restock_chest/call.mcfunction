@@ -1,0 +1,1 @@
+function pln:util/on_restock/run_restock/restock_single_chest/restock_chest with storage pln:data root.manifest.matured.entries[0]

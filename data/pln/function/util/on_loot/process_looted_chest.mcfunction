@@ -15,8 +15,6 @@
 
 scoreboard objectives add pln.util.process_chest dummy
 
-$say general table - $(loot_table)
-
 scoreboard players operation .show_raycast_tracers pln.util.process_chest = .show_raycast_tracers pln.globalvar.settings
 scoreboard players set .b_dont_spawn_marker pln.util.process_chest 0
 scoreboard players set .i_existing_marker_id pln.util.process_chest 0
@@ -33,10 +31,10 @@ scoreboard players set .i_rc_steps_remaining pln.util.process_chest 200
 execute if score .b_chest_found pln.util.process_chest matches 0 run function pln:util/on_loot/raycast_chest/high_res_loop
 
 # Handle new marker
-execute if score .b_chest_found pln.util.process_chest matches 1 \
+$execute if score .b_chest_found pln.util.process_chest matches 1 \
     unless score .i_existing_marker_id pln.util.process_chest matches 1.. \
         as @n[distance=..10,type=marker,tag=pln_chest_marker,tag=new] at @s \
-            run function pln:util/on_loot/populate_new_marker
+            run function pln:util/on_loot/populate_new_marker {loot_table:"$(loot_table)"}
 
 # Handle existing marker
 # execute if score .b_chest_found pln.util.process_chest matches 1 \

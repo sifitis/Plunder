@@ -14,6 +14,12 @@ execute unless score .next_marker_index pln.globalvar matches 0..2147483647 run 
 
 scoreboard objectives add pln.util.const dummy
 
+execute unless score .is_checking pln.globalvar matches 0..1 run \
+     scoreboard players set .is_checking pln.globalvar 0
+
+execute unless score .is_restocking pln.globalvar matches 0..1 run \
+     scoreboard players set .is_restocking pln.globalvar 0
+
 # # ================================================================================================ #
 # #  Global Settings  
 # # ================================================================================================ #
@@ -31,7 +37,7 @@ execute unless score .show_raycast_tracers pln.globalvar.settings matches 0..1 r
      scoreboard players set .show_raycast_tracers pln.globalvar.settings 0
 
 # Show particle tracers on raycasts
-execute unless score .show_raycast_tracers pln.globalvar.settings matches 0..2147483647 run \
+execute unless score .restock_time pln.globalvar.settings matches 0..2147483647 run \
      scoreboard players set .restock_time pln.globalvar.settings 10080
 
 # # Should the datapack perform garbage collection on empty scoreboards
@@ -73,9 +79,10 @@ execute unless score .show_raycast_tracers pln.globalvar.settings matches 0..214
 # #  Command Storage Data 
 # # ================================================================================================ #
 
-execute unless data storage pln:data root.manifest root run \
+execute unless data storage pln:data root.manifest run \
      data modify storage pln:data root.manifest set value {\
           live:{entries:[],num_entries:0},\
+          matured:{entries:[],num_entries:0},\
           expired:{entries:[],num_entries:0},\
           failed:{entries:[],num_entries:0}\
      }
@@ -100,8 +107,8 @@ execute unless data storage pln:data root.manifest root run \
 # scoreboard players set .-1 zz.broker.const -1
 # scoreboard players set .64 zz.broker.const 64
 
-# # ================================================================================================ #
-# #  Villager Respawn 
-# # ================================================================================================ #
+# ================================================================================================ #
+#  Start Subproceses
+# ================================================================================================ #
 
-# schedule function broker:util/subprocess/regenerate_villagers 5s
+schedule function pln:util/subprocess/driver_restock 10t
