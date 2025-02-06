@@ -1,4 +1,8 @@
 
+# # Log Output
+# execute if score .log_output pln.globalvar.settings matches 1 run tellraw @a \
+#         [{"text":" > pln:util/on_loot/raycast_chest/low_res_loop","color":"light_purple"}]
+
 # Iterate
 scoreboard players remove .i_rc_steps_remaining pln.util.process_chest 1
 

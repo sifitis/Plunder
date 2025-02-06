@@ -1,4 +1,8 @@
 
+# Log Output
+execute if score .log_output pln.globalvar.settings matches 1 run tellraw @a \
+        [{"text":" > pln:util/on_loot/process_looted_chest","color":"light_purple"}]
+
 # The steps are as follows:
 #
 #   Send out a low resolution raycast to find the chest
@@ -23,22 +27,33 @@ scoreboard players set .i_existing_marker_id pln.util.process_chest 0
 scoreboard players set .b_chest_found pln.util.process_chest 0
 
 # Attempt at low resolution
+execute if score .log_output pln.globalvar.settings matches 1 if score .b_chest_found pln.util.process_chest matches 0 run tellraw @a \
+        [{"text":" > pln:util/on_loot/raycast_chest/low_res_loop","color":"light_purple"}]
+
 scoreboard players set .i_rc_steps_remaining pln.util.process_chest 20
 execute if score .b_chest_found pln.util.process_chest matches 0 run function pln:util/on_loot/raycast_chest/low_res_loop
 
 # Attempt at high resolution
+execute if score .log_output pln.globalvar.settings matches 1 if score .b_chest_found pln.util.process_chest matches 0 run tellraw @a \
+        [{"text":" > pln:util/on_loot/raycast_chest/high_res_loop","color":"light_purple"}]
+
 scoreboard players set .i_rc_steps_remaining pln.util.process_chest 200
 execute if score .b_chest_found pln.util.process_chest matches 0 run function pln:util/on_loot/raycast_chest/high_res_loop
 
 # Handle new marker
 $execute if score .b_chest_found pln.util.process_chest matches 1 \
-    unless score .i_existing_marker_id pln.util.process_chest matches 1.. \
+    if score .b_old_marker_found pln.util.process_chest matches 0 \
         as @n[distance=..10,type=marker,tag=pln_chest_marker,tag=new] at @s \
             run function pln:util/on_loot/populate_new_marker {loot_table:"$(loot_table)"}
 
 # Handle existing marker
-# execute if score .b_chest_found pln.util.process_chest matches 1 \
-#     if score .i_existing_marker_id pln.util.process_chest matches 1.. \
-#         run function pln:util/on_loot/populate_new_marker
+$execute if score .b_chest_found pln.util.process_chest matches 1 \
+    if score .b_old_marker_found pln.util.process_chest matches 1 \
+        as @n[distance=..10,type=marker,tag=pln_chest_marker,tag=pln_old_marker] at @s \
+            run function pln:util/on_loot/populate_old_marker {loot_table:"$(loot_table)"}
 
 #scoreboard objectives remove pln.util.process_chest
+
+# Log Output
+execute if score .log_output pln.globalvar.settings matches 1 run tellraw @a \
+        [{"text":" < pln:util/on_loot/process_looted_chest","color":"red"}]

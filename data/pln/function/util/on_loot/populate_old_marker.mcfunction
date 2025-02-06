@@ -1,28 +1,15 @@
 
 # Log Output
 execute if score .log_output pln.globalvar.settings matches 1 run tellraw @a \
-        [{"text":" > pln:util/on_loot/populate_new_marker","color":"light_purple"}]
+        [{"text":" > pln:util/on_loot/populate_old_marker","color":"light_purple"}]
 
 # args: [loot_table]
 
-execute store result entity @s data.plunder.id int 1.0 run scoreboard players get .next_marker_index pln.globalvar
+# Log Output
+execute if score .log_output pln.globalvar.settings matches 1 run tellraw @a \
+        [{"text":"-A loot table was resolved in a chest with an existing marker.  Creating a new record for future restocking.","color":"aqua"}]
+
 $data modify entity @s data.plunder.loot_table set value "$(loot_table)"
-execute if predicate {"condition":"entity_properties","entity":"this","predicate":{"location":{"dimension":"minecraft:overworld"}}} run data modify entity @s data.plunder.dim set value 0
-execute if predicate {"condition":"entity_properties","entity":"this","predicate":{"location":{"dimension":"minecraft:the_nether"}}} run data modify entity @s data.plunder.dim set value 1
-execute if predicate {"condition":"entity_properties","entity":"this","predicate":{"location":{"dimension":"minecraft:the_end"}}} run data modify entity @s data.plunder.dim set value 2
-data modify entity @s data.plunder.rep set value 0
-data modify entity @s data.plunder.old_item_sets set value []
-
-# Log Output
-execute if score .log_output pln.globalvar.settings matches 1 run tellraw @a \
-        [{"text":"-Data added to new marker.","color":"aqua"}]
-
-scoreboard players add .next_marker_index pln.globalvar 1
-
-# Log Output
-execute if score .log_output pln.globalvar.settings matches 1 run tellraw @a \
-        [{"text":"-pln.globalvar .next_marker_index updated to ","color":"aqua"},\
-        {"score":{"name":".next_marker_index","objective":"pln.globalvar"},"color":"green"}]
 
 # Format of manifest entry:
 #{
@@ -47,7 +34,7 @@ execute store result storage pln:data root.compose.new.pos_x int 1.0 run data ge
 execute store result storage pln:data root.compose.new.pos_y int 1.0 run data get entity @s Pos[1]
 execute store result storage pln:data root.compose.new.pos_z int 1.0 run data get entity @s Pos[2]
 execute store result storage pln:data root.compose.new.mature_time int 1.0 run scoreboard players get .mature_time pln.util.process_chest
-data modify storage pln:data root.compose.new.rep set value 0
+data modify storage pln:data root.compose.new.rep set from entity @s data.plunder.rep
 
 # Log Output
 execute if score .log_output pln.globalvar.settings matches 1 run tellraw @a \
@@ -60,8 +47,8 @@ execute if score .log_output pln.globalvar.settings matches 1 run tellraw @a \
 data modify storage pln:data root.manifest.live.entries append from storage pln:data root.compose.new
 data remove storage pln:data root.compose
 
-tag @s remove new
+tag @s remove pln_old_marker
 
 # Log Output
 execute if score .log_output pln.globalvar.settings matches 1 run tellraw @a \
-        [{"text":" < pln:util/on_loot/populate_new_marker","color":"red"}]
+        [{"text":" < pln:util/on_loot/populate_old_marker","color":"red"}]
