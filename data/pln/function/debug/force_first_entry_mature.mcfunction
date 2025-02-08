@@ -1,6 +1,10 @@
 
 # Log Output
 execute if score .log_output pln.globalvar.settings matches 1 run tellraw @a \
+        [{"text":" >>> Mature First Entry Debug Operation","color":"dark_blue"}]
+
+# Log Output
+execute if score .log_output pln.globalvar.settings matches 1 run tellraw @a \
         [{"text":" > pln:debug/force_first_entry_mature [ID: ","color":"light_purple"},\
         {"nbt":"root.manifest.live.entries[0].id","storage":"pln:data","color":"green"},\
         {"text":"]","color":"light_purple"}\

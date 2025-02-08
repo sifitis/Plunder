@@ -1,6 +1,10 @@
 
 # Log Output
 execute if score .log_output pln.globalvar.settings matches 1 run tellraw @a \
+        [{"text":" >>> Checking Operation","color":"dark_blue"}]
+
+# Log Output
+execute if score .log_output pln.globalvar.settings matches 1 run tellraw @a \
         [{"text":" > pln:util/on_check/begin_check","color":"light_purple"}]
 
 # Log Output

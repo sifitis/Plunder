@@ -28,7 +28,9 @@ execute if score .log_output pln.globalvar.settings matches 1 run tellraw @a \
 
 # Log Output
 execute if score .log_output pln.globalvar.settings matches 1 if score .b_old_marker_found pln.util.process_chest matches 1 run tellraw @a \
-        [{"text":"-Existing marker found.","color":"aqua"}]
+        [{"text":"-Existing marker found. [ID=","color":"aqua"},\
+        {"nbt":"data.plunder.id","entity":"@n[type=marker,distance=..20,tag=pln_old_marker]","color":"green"},\
+        {"text":"]","color":"aqua"}]
 
 # Log Output
 execute if score .log_output pln.globalvar.settings matches 1 if score .b_old_marker_found pln.util.process_chest matches 0 run tellraw @a \

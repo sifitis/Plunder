@@ -1,6 +1,10 @@
 
 # Log Output
 execute if score .log_output pln.globalvar.settings matches 1 run tellraw @a \
+        [{"text":" >>> Looting Operation","color":"dark_blue"}]
+
+# Log Output
+execute if score .log_output pln.globalvar.settings matches 1 run tellraw @a \
         [{"text":" > pln:util/on_loot/mark_plunder/abandoned_mineshaft","color":"light_purple"}]
 
 advancement revoke @s only pln:util/detect_table_gen/abandoned_mineshaft
