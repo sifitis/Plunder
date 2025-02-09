@@ -1,7 +1,7 @@
 
 # # This is where all of the important stuff is done to start the datapack up
 
-tellraw @a [{"text":"Plunder v1.0.0 loaded.","color":"#AA9944"}]
+tellraw @a [{"text":"Plunder v1.0.0 Alpha loaded.","color":"#AA9944"}]
 
 # # ================================================================================================ #
 # #  Essential objectives  
