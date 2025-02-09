@@ -3,7 +3,7 @@
 execute if score .log_output pln.globalvar.settings matches 1 run tellraw @a \
         [{"text":" > pln:util/on_restock/run_restock/restock_single_chest/restock_chest","color":"light_purple"}]
 
-$execute positioned $(pos_x) $(pos_y) $(pos_z) align xyz positioned ~0.5 ~0.5 ~0.5 as @n[type=marker,distance=..0.1,tag=pln_chest_marker] at @s run \
+$execute positioned $(pos_x) $(pos_y) $(pos_z) align xyz positioned ~0.5 ~0.5 ~0.5 as @n[type=marker,distance=..0.5,tag=pln_chest_marker] at @s run \
     function pln:util/on_restock/run_restock/restock_single_chest/process_marker
 
 # Log Output

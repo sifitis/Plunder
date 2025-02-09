@@ -44,5 +44,9 @@ execute unless block ~ ~ ~ #pln:loot_table_container run \
     kill @s
 
 # Log Output
+execute if score .log_output pln.globalvar.settings matches 1 unless block ~ ~ ~ #pln:loot_table_container run tellraw @a \
+        [{"text":"-No chest present. Deleting marker.","color":"aqua"}]
+
+# Log Output
 execute if score .log_output pln.globalvar.settings matches 1 run tellraw @a \
         [{"text":" < pln:util/on_restock/run_restock/restock_single_chest/process_marker","color":"red"}]
